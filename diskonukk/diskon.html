@@ -103,35 +103,34 @@
 
   <!-- ===== LOGIKA JAVASCRIPT ===== -->
   <script>
-    function hitungDiskon() {
-      const harga = parseFloat(document.getElementById("harga").value);
-      const diskon = parseFloat(document.getElementById("diskon").value);
-      const hasil = document.getElementById("hasil");
+   function hitungDiskon() {
+  const harga = parseFloat(document.getElementById("harga").value);
+  const diskon = parseFloat(document.getElementById("diskon").value);
 
-      // Validasi input
-      if (isNaN(harga) || isNaN(diskon)) {
-        hasil.innerHTML = "<span class='error'>⚠️ Isi harga dan diskon dengan benar!</span>";
-        return;
-      }
-      if (harga <= 0) {
-        hasil.innerHTML = "<span class='error'>⚠️ Harga harus lebih dari 0!</span>";
-        return;
-      }
-      if (diskon < 0 || diskon > 100) {
-        hasil.innerHTML = "<span class='error'>⚠️ Diskon harus antara 0 - 100%!</span>";
-        return;
-      }
+  // Validasi input
+  if (isNaN(harga) || isNaN(diskon)) {
+    alert("⚠️ Isi harga dan diskon dengan benar!");
+    return;
+  }
+  if (harga <= 0) {
+    alert("⚠️ Harga harus lebih dari 0!");
+    return;
+  }
+  if (diskon < 0 || diskon > 100) {
+    alert("⚠️ Diskon harus antara 0 - 100%!");
+    return;
+  }
 
-      // Hitung total harga
-      const potongan = harga * (diskon / 100);
-      const total = harga - potongan;
+  // Hitung total harga
+  const potongan = harga * (diskon / 100);
+  const total = harga - potongan;
 
-      // Tampilkan hasil
-      hasil.innerHTML = `
-        <span class='success'>💸 Diskon: Rp ${potongan.toFixed(2)}</span>
-        <span class='success'>✅ Total Bayar: Rp ${total.toFixed(2)}</span>
-      `;
-    }
+  // Tampilkan hasil dalam alert
+  alert(
+    `💸 Diskon: Rp ${potongan.toFixed(2)}\n✅ Total Bayar: Rp ${total.toFixed(2)}`
+  );
+}
+
   </script>
 
 </body>
