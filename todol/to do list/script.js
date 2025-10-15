@@ -1,73 +1,45 @@
-// Data tugas disimpan di array
-let tasks = [];
-
 function addTask() {
-  const name = document.getElementById("taskName").value.trim();
-  const date = document.getElementById("taskDate").value;
-  const priority = document.getElementById("taskPriority").value;
+  const taskNameInput = document.getElementById("taskName");
+  const taskDateInput = document.getElementById("taskDate");
+  const taskPrioritySelect = document.getElementById("taskPriority");
+  const taskList = document.getElementById("taskList");
 
-  if (name === "") {
-    alert("Nama tugas tidak boleh kosong!");
+  const name = taskNameInput.value.trim();
+  const date = taskDateInput.value;
+  const status = taskPrioritySelect.value;
+
+  if (!name) {
+    alert("⚠️ Harap isi nama tugas terlebih dahulu!");
     return;
   }
 
-  const newTask = {
-    name,
-    date,
-    priority,
-    done: false
-  };
+  const li = document.createElement("li");
+  li.className = "task-item";
 
-  tasks.push(newTask);
-  document.getElementById("taskName").value = "";
-  renderTasks();
-}
+  li.innerHTML = `
+    <strong>${name}</strong>
+    <span class="status">${status}</span>
+    ${date ? `<small>${date}</small>` : ""}
+    <button class="delete">Hapus</button>
+    <button class="edit">Edit</button>
+  `;
 
-function renderTasks() {
-  const list = document.getElementById("taskList");
-  list.innerHTML = "";
-
-  if (tasks.length === 0) {
-    list.innerHTML = "<p style='text-align:center; color:gray;'>Belum ada tugas</p>";
-    return;
-  }
-
-  tasks.forEach((task, index) => {
-    const li = document.createElement("li");
-    li.className = "task" + (task.done ? " done" : "");
-
-    li.innerHTML = `
-      <div class="task-info">
-        <strong>${task.name}</strong>
-        <small>Prioritas: ${task.priority} | Tanggal: ${task.date || "-"}</small>
-      </div>
-      <div class="buttons">
-        <button class="done-btn" onclick="toggleDone(${index})">✔</button>
-        <button class="edit" onclick="editTask(${index})">✎</button>
-        <button onclick="deleteTask(${index})">🗑</button>
-      </div>
-    `;
-
-    list.appendChild(li);
+  li.querySelector(".delete").addEventListener("click", () => {
+    if (confirm("Yakin ingin menghapus tugas ini?")) {
+      li.remove();
+    }
   });
-}
 
-function toggleDone(index) {
-  tasks[index].done = !tasks[index].done;
-  renderTasks();
-}
+  li.querySelector(".edit").addEventListener("click", () => {
+    taskNameInput.value = name;
+    taskDateInput.value = date;
+    taskPrioritySelect.value = status;
+    li.remove();
+  });
 
-function deleteTask(index) {
-  if (confirm("Yakin ingin menghapus tugas ini?")) {
-    tasks.splice(index, 1);
-    renderTasks();
-  }
-}
+  taskList.appendChild(li);
 
-function editTask(index) {
-  const newName = prompt("Ubah nama tugas:", tasks[index].name);
-  if (newName && newName.trim() !== "") {
-    tasks[index].name = newName.trim();
-    renderTasks();
-  }
+  taskNameInput.value = "";
+  taskDateInput.value = "";
+  taskPrioritySelect.value = "belum selesai";
 }
