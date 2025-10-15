@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aplikasi Perhitungan Diskon</title>
+<style>
+  /* ===== STYLE UMUM ===== */
+  * { box-sizing: border-box; font-family: "Poppins", sans-serif; }
+  body {
+    background: linear-gradient(135deg, #232526, #414345);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ===== KOTAK UTAMA ===== */
+  .card {
+    background: #ffffff15;
+    backdrop-filter: blur(8px);
+    width: 330px;
+    border-radius: 16px;
+    padding: 30px 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    color: #fff;
+    text-align: center;
+  }
+
+  .card h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #ffe98a;
+  }
+
+  /* ===== INPUT & TOMBOL ===== */
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+    outline: none;
+  }
+
+  input:focus {
+    box-shadow: 0 0 5px #ffe98a;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffe98a;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    background-color: #fff3b0;
+  }
+
+  /* ===== HASIL ===== */
+  .hasil {
+    margin-top: 20px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 60px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .error { color: #ff8a8a; }
+  .success { color: #b6f7b0; }
+</style>
+</head>
+<body>
+
+  <!-- ===== STRUKTUR HTML ===== -->
+  <div class="card">
+    <h2>💰 Aplikasi Perhitungan Diskon</h2>
+
+    <!-- Input harga barang -->
+    <input type="number" id="harga" placeholder="Masukkan harga barang (Rp)">
+
+    <!-- Input persen diskon -->
+    <input type="number" id="diskon" placeholder="Masukkan diskon (%)">
+
+    <!-- Tombol hitung -->
+    <button onclick="hitungDiskon()">Hitung</button>
+
+    <!-- Hasil perhitungan -->
+    <div id="hasil" class="hasil">Hasil akan muncul di sini</div>
+  </div>
+
+  <!-- ===== LOGIKA JAVASCRIPT ===== -->
+  <script>
+    function hitungDiskon() {
+      const harga = parseFloat(document.getElementById("harga").value);
+      const diskon = parseFloat(document.getElementById("diskon").value);
+      const hasil = document.getElementById("hasil");
+
+      // Validasi input
+      if (isNaN(harga) || isNaN(diskon)) {
+        hasil.innerHTML = "<span class='error'>⚠️ Isi harga dan diskon dengan benar!</span>";
+        return;
+      }
+      if (harga <= 0) {
+        hasil.innerHTML = "<span class='error'>⚠️ Harga harus lebih dari 0!</span>";
+        return;
+      }
+      if (diskon < 0 || diskon > 100) {
+        hasil.innerHTML = "<span class='error'>⚠️ Diskon harus antara 0 - 100%!</span>";
+        return;
+      }
+
+      // Hitung total harga
+      const potongan = harga * (diskon / 100);
+      const total = harga - potongan;
+
+      // Tampilkan hasil
+      hasil.innerHTML = `
+        <span class='success'>💸 Diskon: Rp ${potongan.toFixed(2)}</span>
+        <span class='success'>✅ Total Bayar: Rp ${total.toFixed(2)}</span>
+      `;
+    }
+  </script>
+
+</body>
+</html>

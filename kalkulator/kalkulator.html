@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Modern</title>
+  <style>
+    /* ====== Reset dan Dasar ====== */
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+    }
+
+    /* ====== Container Utama ====== */
+    .kalkulator {
+      width: 340px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      padding: 25px 30px;
+      text-align: center;
+      animation: fadeIn 0.7s ease;
+    }
+
+    .kalkulator h2 {
+      margin-bottom: 20px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #ffe985;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ====== Input ====== */
+    .input-box {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input[type="number"] {
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      color: #333;
+      background: #fff;
+      transition: all 0.2s ease-in-out;
+    }
+
+    input[type="number"]:focus {
+      box-shadow: 0 0 8px #ffe985;
+      transform: scale(1.03);
+    }
+
+    /* ====== Tombol Operasi ====== */
+    .tombol {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      background: #ffe985;
+      color: #222;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 0;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: #fff7b0;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+    }
+
+    /* ====== Hasil ====== */
+    .hasil {
+      margin-top: 25px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 18px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+
+    .hasil strong {
+      color: #84fab0;
+    }
+
+    .error {
+      color: #ff8b8b;
+    }
+
+    /* ====== Animasi ====== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="kalkulator">
+    <h2>🧮 Kalkulator Modern</h2>
+
+    <!-- Input Angka -->
+    <div class="input-box">
+      <input type="number" id="angka1" placeholder="Masukkan angka pertama">
+      <input type="number" id="angka2" placeholder="Masukkan angka kedua">
+    </div>
+
+    <!-- Tombol Operasi -->
+    <div class="tombol">
+      <button onclick="hitung('+')">+</button>
+      <button onclick="hitung('-')">−</button>
+      <button onclick="hitung('*')">×</button>
+      <button onclick="hitung('/')">÷</button>
+    </div>
+
+    <!-- Hasil -->
+    <div id="hasil" class="hasil">Hasil akan muncul di sini</div>
+  </div>
+
+
+   <!-- js -->
+  <script>
+    function hitung(op) {
+      const angka1 = parseFloat(document.getElementById("angka1").value);
+      const angka2 = parseFloat(document.getElementById("angka2").value);
+      const hasilBox = document.getElementById("hasil");
+
+      // Validasi input
+      if (isNaN(angka1) || isNaN(angka2)) {
+        hasilBox.innerHTML = "<span class='error'>⚠️ Harap isi kedua angka dengan benar!</span>";
+        return;
+      }
+
+      let hasil;
+
+      switch (op) {
+        case '+':
+          hasil = angka1 + angka2;
+          break;
+        case '-':
+          hasil = angka1 - angka2;
+          break;
+        case '*':
+          hasil = angka1 * angka2;
+          break;
+        case '/':
+          if (angka2 === 0) {
+            hasilBox.innerHTML = "<span class='error'>❌ Tidak bisa dibagi dengan nol!</span>";
+            return;
+          }
+          hasil = angka1 / angka2;
+          break;
+      }
+
+      hasilBox.innerHTML = `✅ Hasil: <strong>${hasil}</strong>`;
+      hasilBox.style.animation = "pop 0.3s ease";
+      setTimeout(() => hasilBox.style.animation = "", 300);
+    }
+  </script>
+
+</body>
+</html>

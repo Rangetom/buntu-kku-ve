@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi To-Do List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>📝 To-Do List Harian</h1>
+
+    <div class="input-area">
+      <input type="text" id="taskName" placeholder="Masukkan nama tugas...">
+      <input type="date" id="taskDate">
+      <select id="taskPriority">
+        <option value="belum selesai">belum selesai</option>
+        <option value="Sedang kerja">Sedang kerja</option>
+        <option value="selesai">selesai</option>
+      </select>
+      <button onclick="addTask()">Tambah</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+
+ 
+
+  <script src="script.js"></script>
+</body>
+</html>
